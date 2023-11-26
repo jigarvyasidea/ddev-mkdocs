@@ -1,91 +1,88 @@
-[![tests](https://github.com/ddev/ddev-addon-template/actions/workflows/tests.yml/badge.svg)](https://github.com/ddev/ddev-addon-template/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2024.svg)
+[![tests](https://github.com/Metadrop/ddev-mkdocs/actions/workflows/tests.yml/badge.svg)](https://github.com/tadrop/ddev-mkdocs/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2024.svg)
 
-# ddev-addon-template <!-- omit in toc -->
+## ddev-mkdocs
 
-* [What is ddev-addon-template?](#what-is-ddev-addon-template)
-* [Components of the repository](#components-of-the-repository)
-* [Getting started](#getting-started)
-* [How to debug in Github Actions](#how-to-debug-in-github-actions)
+This is a ddev-addon for [mkdocs](https://www.mkdocs.org/), based on [Metadrop mkdocs docker image](https://github.com/Metadrop/docker-mkdocs).
 
-## What is ddev-addon-template?
+MkDocs is a fast, simple and downright gorgeous static site generator that's geared towards building project documentation. Documentation source files are written in Markdown, and configured with a single YAML configuration file.
 
-This repository is a template for providing [DDEV](https://ddev.readthedocs.io) add-ons and services.
-
-In DDEV addons can be installed from the command line using the `ddev get` command, for example, `ddev get ddev/ddev-redis` or `ddev get ddev/ddev-solr`.
-
-This repository is a quick way to get started. You can create a new repo from this one by clicking the template button in the top right corner of the page.
-
-![template button](images/template-button.png)
-
-## Components of the repository
-
-* The fundamental contents of the add-on service or other component. For example, in this template there is a [docker-compose.addon-template.yaml](docker-compose.addon-template.yaml) file.
-* An [install.yaml](install.yaml) file that describes how to install the service or other component.
-* A test suite in [test.bats](tests/test.bats) that makes sure the service continues to work as expected.
-* [Github actions setup](.github/workflows/tests.yml) so that the tests run automatically when you push to the repository.
+This addon just provides the basics to view mkdocs static site from docs/ folder on your project.
 
 ## Getting started
 
-1. Choose a good descriptive name for your add-on. It should probably start with "ddev-" and include the basic service or functionality. If it's particular to a specific CMS, perhaps `ddev-<CMS>-servicename`.
-2. Create the new template repository by using the template button.
-3. Globally replace "addon-template" with the name of your add-on.
-4. Add the files that need to be added to a ddev project to the repository. For example, you might remove `docker-compose.addon-template.yaml` with the `docker-compose.*.yaml` for your recipe.
-5. Update the install.yaml to give the necessary instructions for installing the add-on.
+Install this addon with
 
-   * The fundamental line is the `project_files` directive, a list of files to be copied from this repo into the project `.ddev` directory.
-   * You can optionally add files to the `global_files` directive as well, which will cause files to be placed in the global `.ddev` directory, `~/.ddev`.
-   * Finally, `pre_install_commands` and `post_install_commands` are supported. These can use the host-side environment variables documented [in ddev docs](https://ddev.readthedocs.io/en/stable/users/extend/custom-commands/#environment-variables-provided).
-
-6. Update `tests/test.bats` to provide a reasonable test for your repository. Tests are triggered either by manually executing `bats ./tests/test.bat`, automatically on every push to the repository, or periodically each night. Please make sure to attend to test failures when they happen. Others will be depending on you. `bats` is a simple testing framework that just uses `bash`. To run a Bats test locally, you have to [install bats-core](https://bats-core.readthedocs.io/en/stable/installation.html) first. Then you download your add-on, and finally run `bats ./tests/test.bats` within the root of the uncompressed directory. To learn more about Bats see the [documentation](https://bats-core.readthedocs.io/en/stable/).
-7. When everything is working, including the tests, you can push the repository to GitHub.
-8. Create a release on GitHub.
-9. Test manually with `ddev get <owner/repo>`.
-10. You can test PRs with `ddev get https://github.com/<user>/<repo>/tarball/<branch>`
-11. Update the README.md to describe the add-on, how to use it, and how to contribute. If there are any manual actions that have to be taken, please explain them. If it requires special configuration of the using project, please explain how to do those. Examples in [ddev/ddev-solr](https://github.com/ddev/ddev-solr), [ddev/ddev-memcached](github.com/ddev/ddev-memcached), and (advanced) [ddev-platformsh](https://github.com/ddev/ddev-platformsh).
-12. Add a good short description to your repo, and add the label "ddev-get". It will immediately be added to the list provided by `ddev get --list --all`.
-13. When it has matured you will hopefully want to have it become an "official" maintained add-on. Open an issue in the [ddev queue](https://github.com/ddev/ddev/issues) for that.
-
-Note that more advanced techniques are discussed in [DDEV docs](https://ddev.readthedocs.io/en/latest/users/extend/additional-services/#additional-service-configurations-and-add-ons-for-ddev).
-
-## How to debug tests (Github Actions)
-
-1. You need a SSH-key registered with Github. You either pick the key you already authenticate with `github.com` or you create a dedicated new one with `ssh-keygen -t ed25519 -a 64 -f tmate_ed25519 -C "$(date +'%d-%m-%Y')"` and add it at `https://github.com/settings/keys`.
-
-2. Add the following snippet to `~/.ssh/config`
-
-```
-Host *.tmate.io
-    User git
-    AddKeysToAgent yes
-    UseKeychain yes
-    PreferredAuthentications publickey
-    IdentitiesOnly yes
-    IdentityFile ~/.ssh/tmate_ed25519
-```
-3. Go to `https://github.com/<user>/<repo>/actions/workflows/tests.yml`.
-
-4. Click the `Run workflow`- button and you will have the option to the select the branch to run the workflow from and activate `tmate` by checking the `Debug with tmate` checkbox for this run.
-
-![tmate](images/gh-tmate.jpg)
-
-5. After the `workflow_dispatch`-event was triggered click the `All workflows`-link in the sidebar and then click the in progress workflow `tests`.
-
-7. Pick one of the jobs in progress in the sidebar.
-
-8. Wait until the current task list reaches the `tmate debugging session` section and the output shows something like:
-
-```
-106 SSH: ssh PRbaS7SLVxbXImhjUqydQBgDL@nyc1.tmate.io
-107 or: ssh -i <path-to-private-SSH-key> PRbaS7SLVxbXImhjUqydQBgDL@nyc1.tmate.io
-108 SSH: ssh PRbaS7SLVxbXImhjUqydQBgDL@nyc1.tmate.io
-109 or: ssh -i <path-to-private-SSH-key> PRbaS7SLVxbXImhjUqydQBgDL@nyc1.tmate.io
+```shell
+ddev get Metadrop/ddev-mkdocs
 ```
 
-9. Copy and execute the first option `ssh PRbaS7SLVxbXImhjUqydQBgDL@nyc1.tmate.io` in the terminal and continue by pressing either `q` or `ctrl-c`.
+After that you need to restart the ddev project:
 
-10. Start the bats test with `bats tests/test.bats`.
+```shell
+ddev restart
+```
 
-For a more detailed documentation about `tmate` see [Debug your GitHubActions by using tmate](https://mxschmitt.github.io/action-tmate/)
+## Using mkdocs
 
+### Configuration
 
-**Contributed and maintained by [@CONTRIBUTOR](https://github.com/CONTRIBUTOR)**
+By default, mkdocs addon show docs from /docs folder inside yout project. This can be updated in docker-compose.mkdocs.yaml as needed.
+
+Also this addon uses ports 9004 and 9005 to view documentation, this can be updated in docker-compose.mkdocs.yaml too. 
+
+### Write your own documentation
+
+To start building your docs you can read the [Mkdocs getting started guide](https://www.mkdocs.org/getting-started/) and for more advanced functionalities here is the [Mkdocs user guide](https://www.mkdocs.org/user-guide/)
+
+### View the documentation
+
+The backstop commands 'backstop remote' and 'backstop openReport' do not work in this setup.
+
+But there is a host command that will open the latest test report in your default browser:
+
+```shell
+ddev backstop-results
+```
+
+Alternatively open the generated HTML-Report with your browser, e.g.:
+
+```shell
+open tests/backstop/backstop_data/_mytestproject_/html_report/index.html 
+```
+
+## Changes to the original docker image
+
+The backstopjs docker image is extended with some functions using a custom docker build, see [Dockerfile](backstopBuild/Dockerfile)
+and uses a custom [entrypoint](backstopBuild/entrypoint.sh).
+
+In the Dockerfile the following is added/changed:
+
+- add the custom entrypoint.sh to the image
+- delete the default 'node' user with uid 1000 and add current ddev user
+- install the [minimist](https://www.npmjs.com/package/minimist) npm package globally. This is not needed by default
+  but very handy to parse command line args for more complex custom backstopjs configs.
+
+The entrypoint is responsible for:
+
+- add /etc/hosts entries for all hosts configured in the ddev web container automatically
+- add sleep command to keep the container running
+
+## Advanced
+
+### How to add additional hostnames?
+
+If you want to test hosts not configured in the web container, you need to use external_links in
+[docker-compose.backstop.yaml](docker-compose.backstop.yaml).
+
+See: [ddev FAQ: Can different projects communicate with each other?](https://ddev.readthedocs.io/en/latest/users/usage/faq/#features-requirements)
+
+Do not forget to remove the #ddev-generated line!
+
+### Change backstop tests directory
+Per default the backstop directory containing backstop config etc. is expected in your project directory (besides the
+.ddev folder) in the directory *tests/backstop*.
+
+If you want to change that edit the file [docker-compose.backstop.yaml](docker-compose.backstop.yaml) and
+change the line in volumes to the path you want to use, move the files to the new directory and restart ddev.
+
+Make sure to remove the #ddev-generated line from the file to prevent ddev from making changes to it.

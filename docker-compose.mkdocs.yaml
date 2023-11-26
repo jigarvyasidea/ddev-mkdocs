@@ -1,0 +1,25 @@
+#ddev-generated
+version: '3.7'
+services:
+  mkdocs:
+    container_name: "ddev-${DDEV_SITENAME}-mkdocs"
+    image: metadrop/docker-mkdocs
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+      - HTTP_EXPOSE=9004:8080
+      - HTTPS_EXPOSE=9005:8080
+    volumes:
+      - $DDEV_APPROOT/docs:/docs
+    user:  '$DDEV_UID:$DDEV_GID'
+    working_dir: /docs
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    networks:
+      ddev_default: null
+      default: null
+    expose: 
+      - "8080"
+  web:
+   links:
+     - mkdocs:mkdocs
