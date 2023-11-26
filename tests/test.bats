@@ -12,9 +12,7 @@ setup() {
 }
 
 health_checks() {
-  # Do something useful here that verifies the add-on
-  # ddev exec "curl -s elasticsearch:9200" | grep "${PROJNAME}-elasticsearch"
-  ddev exec "curl -s https://localhost:443/"
+  curl -s http://mkdocs:8080 | grep -m1 "Welcome to Mkdocs"
 }
 
 teardown() {
@@ -24,20 +22,11 @@ teardown() {
   [ "${TESTDIR}" != "" ] && rm -rf ${TESTDIR}
 }
 
-@test "install from directory" {
-  set -eu -o pipefail
-  cd ${TESTDIR}
-  echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev get ${DIR}
-  ddev restart
-  health_checks
-}
-
 @test "install from release" {
   set -eu -o pipefail
   cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
-  echo "# ddev get ddev/ddev-addon-template with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev get ddev/ddev-addon-template
+  echo "# ddev get metadrop/ddev-mkdocs with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev get metadrop/ddev-mkdocs
   ddev restart >/dev/null
   health_checks
 }

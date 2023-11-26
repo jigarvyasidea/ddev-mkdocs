@@ -7,7 +7,7 @@ pre_install_actions:
   - |
     #ddev-nodisplay
     cat  <<-END >${DDEV_APPROOT}/docs/mkdocs.yml
-    site_name: Mkdocs site:
+    site_name: Mkdocs site
     theme: material
     dev_addr: '0.0.0.0:8080'
     nav:
