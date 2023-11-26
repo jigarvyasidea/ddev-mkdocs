@@ -12,7 +12,7 @@ setup() {
 }
 
 health_checks() {
-  curl -s http://mkdocs:8080 | grep -m1 "Welcome to Mkdocs"
+  ddev exec wget http://mkdocs:8080 -q -O - | grep Welcome | grep -m1 "Welcome to Mkdocs"
 }
 
 teardown() {
