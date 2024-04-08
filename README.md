@@ -1,8 +1,15 @@
 [![tests](https://github.com/Metadrop/ddev-mkdocs/actions/workflows/tests.yml/badge.svg)](https://github.com/Metadrop/ddev-mkdocs/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2024.svg)
 
-## ddev-mkdocs
+* [What is DDEV Mkdocs Add-on?](#what-is-ddev-mkdocs-add-on)
+* [Getting started](#getting-started)
+* [Using mkdocs](#using-mkdocs)
+  * [Configuration](#configuration)
+  * [Write your own documentation](#write-your-own-documentation)
+  * [View the documentation](#view-the-documentation)
 
-This is a ddev-addon for [mkdocs](https://www.mkdocs.org/), based on [Metadrop mkdocs docker image](https://github.com/Metadrop/docker-mkdocs).
+## What is DDEV Mkdocs Add-on?
+
+his repository provides a [DDEV](https://ddev.readthedocs.io) add-on for the [mkdocs](https://www.mkdocs.org/) service, based on [Metadrop mkdocs docker image](https://github.com/Metadrop/docker-mkdocs).
 
 MkDocs is a fast, simple and downright gorgeous static site generator that's geared towards building project documentation. Documentation source files are written in Markdown, and configured with a single YAML configuration file.
 
