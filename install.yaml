@@ -1,4 +1,4 @@
-name: ddev-mkdocs
+name: mkdocs
 
 pre_install_actions:
   - test -d ${DDEV_APPROOT}/docs || mkdir -p ${DDEV_APPROOT}/docs
