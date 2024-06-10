@@ -3,19 +3,12 @@ name: mkdocs
 pre_install_actions:
   - test -d ${DDEV_APPROOT}/docs || mkdir -p ${DDEV_APPROOT}/docs
   - test -d ${DDEV_APPROOT}/docs/docs || mkdir -p ${DDEV_APPROOT}/docs/docs
-  - test -f ${DDEV_APPROOT}/docs/mkdocs.yml || touch ${DDEV_APPROOT}/docs/mkdocs.yml
-  - |
-    #ddev-nodisplay
-    cat  <<-END >${DDEV_APPROOT}/docs/mkdocs.yml
-    site_name: Mkdocs site
-    theme: material
-    dev_addr: '0.0.0.0:8080'
-    nav:
-      - Home: index.md
-    END
+  - test -f ${DDEV_APPROOT}/docs/mkdocs.yml || cp docs/mkdocs.yml ${DDEV_APPROOT}/docs/mkdocs.yml
   - test -f ${DDEV_APPROOT}/docs/docs/index.md || echo "## Welcome to Mkdocs" > ${DDEV_APPROOT}/docs/docs/index.md
+
 project_files:
 - docker-compose.mkdocs.yaml
+- docs
 
 post_install_actions:
  - echo "Mkdocs install finished. Please restart ddev with 'ddev restart'"

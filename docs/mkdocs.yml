@@ -1,0 +1,7 @@
+#ddev-nodisplay
+cat  <<-END >${DDEV_APPROOT}/docs/mkdocs.yml
+site_name: Mkdocs site
+theme: material
+dev_addr: '0.0.0.0:8080'
+nav:
+  - Home: index.md
