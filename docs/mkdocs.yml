@@ -1,5 +1,4 @@
-#ddev-nodisplay
-cat  <<-END >${DDEV_APPROOT}/docs/mkdocs.yml
+#ddev-generated
 site_name: Mkdocs site
 theme: material
 dev_addr: '0.0.0.0:8080'
