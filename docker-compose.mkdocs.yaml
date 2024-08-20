@@ -9,6 +9,8 @@ services:
       - HTTPS_EXPOSE=9005:8080
     volumes:
       - $DDEV_APPROOT/docs:/docs
+      - .:/mnt/ddev_config:ro
+      - ddev-global-cache:/mnt/ddev-global-cache
     user:  '$DDEV_UID:$DDEV_GID'
     working_dir: /docs
     labels:
@@ -17,7 +19,7 @@ services:
     networks:
       ddev_default: null
       default: null
-    expose: 
+    expose:
       - "8080"
   web:
    links:
