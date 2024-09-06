@@ -2,7 +2,7 @@
 services:
   mkdocs:
     container_name: "ddev-${DDEV_SITENAME}-mkdocs"
-    image: metadrop/docker-mkdocs:1.1.0
+    image: metadrop/docker-mkdocs:2.0.1
     environment:
       - VIRTUAL_HOST=$DDEV_HOSTNAME
       - HTTP_EXPOSE=9004:8080
