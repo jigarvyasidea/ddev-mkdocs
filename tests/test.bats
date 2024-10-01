@@ -15,7 +15,7 @@ setup() {
 
 health_checks() {
   echo "Checking mkdocs health" >&3
-  ddev exec wget http://mkdocs:8080 -q -O - | grep Welcome | grep -m1 "Welcome to Mkdocs"
+  ddev exec wget http://mkdocs:8000 -q -O - | grep Welcome | grep -m1 "Welcome to Mkdocs"
 }
 
 check_build_mkdocs() {
