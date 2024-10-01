@@ -1,5 +1,4 @@
-#!/bin/bash
-
+#!/bin/sh
 #ddev-generated
 
 ## Description: Run mkdocs commands
@@ -7,9 +6,9 @@
 ## Example: "ddev mkdocs build"
 ## ExecRaw: true
 
-if [ "$1" == "serve" ]; then
+if [ "$1" = "serve" ]; then
   echo "This does not work for mkdocs in ddev"
   exit 1
 fi
 
-mkdocs "${@:1}"
+mkdocs "${@}"

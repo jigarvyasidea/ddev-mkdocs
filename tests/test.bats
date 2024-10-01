@@ -8,26 +8,36 @@ setup() {
   ddev delete -Oy ${PROJNAME} >/dev/null 2>&1 || true
   cd "${TESTDIR}"
   ddev config --project-name=${PROJNAME}
+  ddev get metadrop/ddev-aljibe
   ddev start -y >/dev/null
+  ddev aljibe-assistant --auto
 }
 
 health_checks() {
+  echo "Checking mkdocs health" >&3
   ddev exec wget http://mkdocs:8080 -q -O - | grep Welcome | grep -m1 "Welcome to Mkdocs"
 }
 
-teardown() {
+check_build_mkdocs() {
+  echo "Checking mkdocs build" >&3
+  ddev mkdocs build
+}
+
+t() {
   set -eu -o pipefail
   cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
   ddev delete -Oy ${PROJNAME} >/dev/null 2>&1
   [ "${TESTDIR}" != "" ] && rm -rf ${TESTDIR}
 }
 
-@test "install from release" {
+@test "Install from folder" {
   set -eu -o pipefail
-  cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
-  echo "# ddev get metadrop/ddev-mkdocs with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev get metadrop/ddev-mkdocs
-  ddev restart >/dev/null
+  cd ${TESTDIR}
+  echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev get ${DIR}
+  echo "Installed add-on from directory, restarting ddev" >&3
+  ddev restart
+  echo "Testing mkdocs" >&3
   health_checks
+  check_build_mkdocs
 }
-
